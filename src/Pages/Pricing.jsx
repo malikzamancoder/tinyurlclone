@@ -1,5 +1,6 @@
 const plans = [
   { name: "Free", price: "$0", features: ["Unlimited short links", "Basic analytics"] },
+  { name: "Pro", price: "$9/mo", features: ["Custom domains", "Advanced analytics", "Priority support"] },
   { name: "Business", price: "$29/mo", features: ["Team accounts", "API access", "Dedicated support"] },
 ];
 
