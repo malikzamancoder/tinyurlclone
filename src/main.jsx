@@ -5,19 +5,19 @@ import { ClerkProvider } from "@clerk/clerk-react";
 
 import "./index.css";
 
-import Dashboard from "./Pages/Dashboard.jsx";
-import Home from "./Pages/Home.jsx";
-import Login from "./Pages/Login.jsx";
-import About from "./Pages/About.jsx";
-import Blog from "./Pages/Blog.jsx";
-import Contact from "./Pages/Contact.jsx";
-import HelpCenter from "./Pages/HelpCenter.jsx";
-import Privacy from "./Pages/Privacy.jsx";
-import Terms from "./Pages/Terms.jsx";
-import Analytics from "./Pages/Analytics.jsx";
-import Pricing from "./Pages/Pricing.jsx";
-import Features from "./Pages/Features.jsx";
-import FAQ from "./Pages/FAQ.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Home from "./pages/Home.jsx";
+import Login from "./pages/Login.jsx";
+import About from "./pages/About.jsx";
+import Blog from "./pages/Blog.jsx";
+import Contact from "./pages/Contact.jsx";
+import HelpCenter from "./pages/HelpCenter.jsx";
+import Privacy from "./pages/Privacy.jsx";
+import Terms from "./pages/Terms.jsx";
+import Analytics from "./pages/Analytics.jsx";
+import Pricing from "./pages/Pricing.jsx";
+import Features from "./pages/Features.jsx";
+import FAQ from "./pages/FAQ.jsx";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
