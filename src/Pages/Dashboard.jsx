@@ -15,68 +15,119 @@ function Dashboard() {
 
   useEffect(() => {
 
-    const fetchLinks = async () => {
-
-      try {
-
-        const response = await axios.get(
-          `${API_URL}/urls`
-        );
-
-        console.log(response.data);
-
-        setLinks(response.data.data);
-
-
-      } catch (error) {
-
-        console.log(
-          "Dashboard Error:",
-          error
-        );
-
-      } finally {
-
-        setLoading(false);
-
-      }
-
-    };
-
-
     fetchLinks();
 
+  }, []);
 
-  }, [API_URL]);
+
+
+  const fetchLinks = async () => {
+
+    try {
+
+      const response = await axios.get(
+        `${API_URL}/urls`
+      );
+
+
+      setLinks(response.data.data);
+
+
+    } catch (error) {
+
+      console.log(
+        "Fetch Error:",
+        error
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
+
+
+
+  const deleteURL = async (id) => {
+
+    try {
+
+      await axios.delete(
+        `${API_URL}/urls/${id}`
+      );
+
+
+      setLinks(
+        links.filter(
+          (link)=> link._id !== id
+        )
+      );
+
+
+    } catch(error){
+
+      console.log(
+        "Delete Error:",
+        error
+      );
+
+    }
+
+  };
+
+
+
+
+
+  const copyURL = (url)=>{
+
+    navigator.clipboard.writeText(url);
+
+    alert("Copied!");
+
+  };
+
 
 
 
 
   const totalClicks = links.reduce(
-    (total, item) => total + item.clicks,
+    (total,item)=> total + item.clicks,
     0
   );
 
 
 
+
   const stats = [
+
     {
       title:"Total Links",
       value:links.length
     },
+
     {
       title:"Total Clicks",
       value:totalClicks
     },
+
     {
       title:"Active Links",
       value:links.length
     },
+
     {
       title:"QR Codes",
       value:"Coming Soon"
     }
+
   ];
+
+
+
 
 
 
@@ -84,13 +135,19 @@ function Dashboard() {
 
     <div className="min-h-screen bg-slate-100">
 
+
       <Navbar />
+
 
 
       <div className="mx-auto max-w-7xl px-6 py-10">
 
 
+
+        {/* Welcome */}
+
         <div className="mb-10 rounded-2xl bg-blue-600 p-8 text-white">
+
 
           <h1 className="text-4xl font-bold">
             Welcome Back 👋
@@ -108,11 +165,16 @@ function Dashboard() {
 
 
 
+
+        {/* Stats */}
+
+
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
 
 
           {
             stats.map((item)=>(
+
 
               <div
                 key={item.title}
@@ -131,6 +193,7 @@ function Dashboard() {
 
               </div>
 
+
             ))
           }
 
@@ -138,6 +201,13 @@ function Dashboard() {
         </div>
 
 
+
+
+
+
+
+
+        {/* Links Table */}
 
 
 
@@ -150,7 +220,9 @@ function Dashboard() {
 
 
 
+
           {
+
             loading ?
 
             <p>
@@ -160,6 +232,7 @@ function Dashboard() {
 
             :
 
+
             <div className="overflow-x-auto">
 
 
@@ -168,7 +241,9 @@ function Dashboard() {
 
                 <thead>
 
+
                   <tr className="border-b">
+
 
                     <th className="py-3 text-left">
                       Original URL
@@ -185,25 +260,36 @@ function Dashboard() {
                     </th>
 
 
+                    <th className="py-3 text-left">
+                      Actions
+                    </th>
+
+
                   </tr>
 
+
                 </thead>
+
+
 
 
 
                 <tbody>
 
 
+
                 {
                   links.map((link)=>(
 
+
                     <tr
                       key={link._id}
-                      className="border-b"
+                      className="border-b last:border-none"
                     >
 
 
-                      <td className="py-4 text-slate-600">
+
+                      <td className="max-w-xs truncate py-4 text-slate-600">
 
                         {link.longUrl}
 
@@ -211,11 +297,26 @@ function Dashboard() {
 
 
 
+
+
                       <td className="py-4 text-blue-600">
 
-                        {API_URL}/{link.shortId}
+
+                        <a
+                          href={`${API_URL}/${link.shortId}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+
+                          {API_URL}/{link.shortId}
+
+                        </a>
+
 
                       </td>
+
+
+
 
 
 
@@ -227,6 +328,68 @@ function Dashboard() {
 
 
 
+
+
+
+
+                      <td className="flex gap-3 py-4">
+
+
+                        <button
+
+                          onClick={()=>alert("Edit feature coming soon")}
+
+                          className="rounded-lg bg-yellow-500 px-4 py-2 text-white hover:bg-yellow-600"
+
+                        >
+
+                          Edit
+
+                        </button>
+
+
+
+
+
+
+                        <button
+
+                          onClick={()=>deleteURL(link._id)}
+
+                          className="rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+
+                        >
+
+                          Delete
+
+                        </button>
+
+
+
+
+
+
+                        <button
+
+                          onClick={()=>copyURL(`${API_URL}/${link.shortId}`)}
+
+                          className="rounded-lg bg-slate-900 px-4 py-2 text-white hover:bg-slate-700"
+
+                        >
+
+                          Copy
+
+                        </button>
+
+
+
+
+                      </td>
+
+
+
+
+
                     </tr>
 
 
@@ -234,11 +397,12 @@ function Dashboard() {
                 }
 
 
+
                 </tbody>
 
 
-
               </table>
+
 
 
             </div>
@@ -251,7 +415,10 @@ function Dashboard() {
 
 
 
+
+
       </div>
+
 
 
     </div>
